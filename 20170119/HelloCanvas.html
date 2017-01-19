@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas</title>
+</head>
+<body>
+<canvas id="canvas" width="1000" height="1000"></canvas>
+
+<script>
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+    var y=100
+    var x=100
+	ctx.fillStyle ="rgb(0,0,255)";
+	ctx.fillRect(200,200,100,100);
+	ctx.fillStyle ="rgb(255,0,0)";
+	ctx.fillRect(300,300,100,100);
+
+
+ctx.beginPath();
+ctx.moveTo(75,50);
+ctx.lineTo(100,75);
+ctx.lineTo(100,25);
+ctx.fill();
+
+ctx.moveTo(150,50);
+ctx.lineTo(125,75);
+ctx.lineTo(125,25);
+ctx.closePath();
+ctx.stroke();
+
+ctx.moveTo(75,50);
+ctx.lineTo(150,75);
+ctx.lineTo(150,25);
+ctx.closePath();
+ctx.stroke();
+
+ctx.moveTo(75,50);
+ctx.lineTo(175,75);
+ctx.lineTo(175,25);
+ctx.closePath();
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(200,200,100,0,Math.PI*0.5,true);
+ctx.fill();
+
+
+ctx.fillStyle ="rgb(0,0,255)";
+ctx.beginPath();
+ctx.arc(500,500,100,0,Math.PI*0.5,false);
+ctx.fill();
+
+ctx.fillStyle ="rgb(0,0,255)";
+ctx.arc(495,495,100,0,Math.PI*0.5,true);
+ctx.fill();
+
+ctx.fillstyle="rgb(0,255,0)";
+ctx.beginPath();
+ctx.arc(700,700,100,Math.PI/6,-(Math.PI/6)*5, true);
+ctx.fill();
+
+
+ctx.beginPath();
+ctx.moveTo(10, 10);
+ctx.quadraticCurveTo(600, 600, 90, 2);
+ctx.stroke();
+
+
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

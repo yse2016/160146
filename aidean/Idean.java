@@ -5,22 +5,20 @@ import java.io.*;
 
 public class Idean{
     public static void main(String[] args) {
-        IdeanMan idm = new IdeanMan();
+        IdeanMan im = new IdeanMan();
     }
 }
 
-
-
 class IdeanMan implements ActionListener{
     JFrame frame;
-    JTextField idea_Name1;
-    JTextField idea_Name2;
-    JTextField file_Name;
+    JTextField idea1;
+    JTextField idea2;
+    JTextField ideaName;
     JTextArea area;
-    JPanel field_Panel;
-    JButton btn_Idea;
-    JButton btn_Save;
-    JLabel label_Plus;
+    JPanel panel;
+    JButton ideaButton;
+    JButton ideaSave;
+    JLabel label;
 
  public IdeanMan(){
 
@@ -29,40 +27,37 @@ class IdeanMan implements ActionListener{
         frame.setSize( 512, 275 );
 
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        idea_Name1 = new JTextField("ワード",20);
-        idea_Name2 = new JTextField("ワード",20);
+        idea1 = new JTextField("ワード",20);
+        idea2 = new JTextField("ワード",20);
 
         area = new JTextArea( 10, 30 );
 
+        fileName = new JTextField("ファイル名を入力.txt",15);
+        panel = new JPanel();
 
-        file_Name = new JTextField("ファイル名を入力.txt",15);
+        ideaButton = new JButton("単語2個表示");
+        ideaButton.addActionListener(this);
+        ideaButton.setActionCommand("idea");
 
-        field_Panel = new JPanel();
+        ideaSave = new JButton("保存");
+        ideaSave.addActionListener(this);
+        ideaSave.setActionCommand("save");
 
-        btn_Idea = new JButton("単語2個表示");
-        btn_Idea.addActionListener(this);
-        btn_Idea.setActionCommand("idea");
+        label = new JLabel("+");
 
-        btn_Save = new JButton("保存");
-        btn_Save.addActionListener(this);
-        btn_Save.setActionCommand("save");
-
-        label_Plus = new JLabel("+");
-
-
-        field_Panel.add( idea_Name1 );
-        field_Panel.add( label_Plus );
-        field_Panel.add( idea_Name2 );
-        field_Panel.add( btn_Idea );
-        field_Panel.add( area );
-        field_Panel.add( file_Name );
-        field_Panel.add( btn_Save );
+        panel.add( idea1 );
+        panel.add( label );
+        panel.add( idea2 );
+        panel.add( ideaButton );
+        panel.add( area );
+        panel.add( fileName );
+        panel.add( saveButton );
 
         Container con = frame.getContentPane();
         con.setLayout( new GridLayout( 1, 1 ) );
-        con.add( field_Panel );
+        con.add( panel );
 
-           frame.setVisible(true);
+        frame.setVisible(true);
     }
 
         public void actionPerformed( ActionEvent ae ){
@@ -71,21 +66,20 @@ class IdeanMan implements ActionListener{
 
         String cmd = ae.getActionCommand();
 
-        if( cmd.equals("Idea") ){
+        if(cmd.equals("Idea") ){
 
-        } else if( cmd.equals("save") ){
+        } else if(cmd.equals("Save") ){
 
-                String text_File_Name = file_Name.getText();
+                String text_File_Name = fileName.getText();
 
                 FileWriter fw = null;
                 PrintWriter pw = null;
-
                 try{
                     fw = new FileWriter( text_File_Name );
                     pw = new PrintWriter( fw );
 
-                    String data1 = idea_Name1.getText();
-                    String data2 = idea_Name2.getText();
+                    String data1 = idea1.getText();
+                    String data2 = idea2.getText();
                     String data3 = area.getText();
 
         pw.println( data1 +" + "+ data2 );

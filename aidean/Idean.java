@@ -33,8 +33,8 @@ class IdeaMan implements ActionListener{
         frame.setSize(500,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        btnOpen = new JButton("単語召喚");
-        btnSave = new JButton("メモ保存");
+        btnOpen = new JButton("単語");
+        btnSave = new JButton("保存");
 
         field = new JTextField(20);
         area = new JTextArea(10,30);
@@ -85,7 +85,7 @@ class IdeaMan implements ActionListener{
             area.append("\n");
             num = (int)(Math.random()*co);
             area.append(datas[num]);
-            
+
         }else if(cmd.equals("save")){
             textdata = area.getText();
             try{

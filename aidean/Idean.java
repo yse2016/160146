@@ -4,100 +4,103 @@ import javax.swing.*;
 import java.io.*;
 
 public class Idean{
-    public static void main(String[] args) {
-        IdeanMan im = new IdeanMan();
+    public static void main(String[] args){
+        IdeaMan im = new IdeaMan();
     }
 }
 
-class IdeanMan implements ActionListener{
-    JFrame frame;
-    JTextField idea1;
-    JTextField idea2;
-    JTextField ideaName;
-    JTextArea area;
-    JPanel panel;
-    JButton ideaButton;
-    JButton ideaSave;
-    JLabel label;
+class IdeaMan implements ActionListener{
 
- public IdeanMan(){
+    JFrame frame;
+    JButton btnOpen;
+    JButton btnSave;
+    JPanel panel;
+    JPanel panel2;
+    JTextField field;
+    JTextArea area;
+    JScrollPane scrollPane;
+    String filedata;
+    String textdata;
+    int max = 128;
+    String[] datas = new String[max];
+    int co = 0;
+    int num = 0;
+
+    public IdeaMan(){
 
         frame = new JFrame("Idean");
-        frame.setLocation( 600, 250 );
-        frame.setSize( 512, 275 );
+        frame.setLocation(500,250);
+        frame.setSize(500,500);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        idea1 = new JTextField("ワード",20);
-        idea2 = new JTextField("ワード",20);
+        btnOpen = new JButton("単語召喚");
+        btnSave = new JButton("メモ保存");
 
-        area = new JTextArea( 10, 30 );
+        field = new JTextField(20);
+        area = new JTextArea(10,30);
+        area.setLineWrap(true);
 
-        fileName = new JTextField("ファイル名を入力.txt",15);
         panel = new JPanel();
 
-        ideaButton = new JButton("単語2個表示");
-        ideaButton.addActionListener(this);
-        ideaButton.setActionCommand("idea");
+        panel.add(btnOpen);
+        panel.add(btnSave);
 
-        ideaSave = new JButton("保存");
-        ideaSave.addActionListener(this);
-        ideaSave.setActionCommand("save");
-
-        label = new JLabel("+");
-
-        panel.add( idea1 );
-        panel.add( label );
-        panel.add( idea2 );
-        panel.add( ideaButton );
-        panel.add( area );
-        panel.add( fileName );
-        panel.add( saveButton );
+        scrollPane = new JScrollPane(area);
 
         Container con = frame.getContentPane();
-        con.setLayout( new GridLayout( 1, 1 ) );
-        con.add( panel );
+        con.setLayout(new GridLayout(2,1));
+        con.add(panel);
+        con.add(scrollPane);
 
         frame.setVisible(true);
-    }
 
-        public void actionPerformed( ActionEvent ae ){
-        String[] idea1 = {"アップルティ","レモンティ"};
-        String[] idea2 = {"タブレット","ウォークマン"};
+        btnOpen.addActionListener(this);
+        btnOpen.setActionCommand("open");
 
-        String cmd = ae.getActionCommand();
-
-        if(cmd.equals("Idea") ){
-
-        } else if(cmd.equals("Save") ){
-
-                String text_File_Name = fileName.getText();
-
-                FileWriter fw = null;
-                PrintWriter pw = null;
-                try{
-                    fw = new FileWriter( text_File_Name );
-                    pw = new PrintWriter( fw );
-
-                    String data1 = idea1.getText();
-                    String data2 = idea2.getText();
-                    String data3 = area.getText();
-
-        pw.println( data1 +" + "+ data2 );
-        pw.println("↓");
-        pw.println( data3 );
-        } catch( IOException e ){
-            System.out.println("エラー");
-        } finally {
+        btnSave.addActionListener(this);
+        btnSave.setActionCommand("save");
         try{
-        fw.close();
-        pw.close();
-        } catch( IOException e ){
-            System.out.println("エラー");
-        }
+                File inFile         = new File("data.txt");
+                FileReader fr       = new FileReader(inFile);
+                BufferedReader br   = new BufferedReader(fr);
+
+                String line;
+                while((line = br.readLine()) != null){
+                    datas[co] = line;
+                    co++;
+                }
+
+                br.close();
+            } catch(IOException e){
+                    System.out.println("エラー");
+            }
         }
 
-    }
+    public void actionPerformed(ActionEvent ae) {
+        String cmd = ae.getActionCommand();
+        if(cmd.equals("open")){
+            num = (int)(Math.random()*co);
+            area.setText(datas[num]);
+
+            area.append("\n");
+            num = (int)(Math.random()*co);
+            area.append(datas[num]);
+            
+        }else if(cmd.equals("save")){
+            textdata = area.getText();
+            try{
+                File outFile            = new File("result.txt");
+                FileWriter fw           = new FileWriter(outFile,true);
+                BufferedWriter bw       = new BufferedWriter(fw);
+                PrintWriter pw          = new PrintWriter(bw);
+
+                pw.println(textdata);
+
+                pw.close();
+
+            }catch(IOException e){
+                System.out.println("エラー");
+            }
+        }
     }
 }
-
-

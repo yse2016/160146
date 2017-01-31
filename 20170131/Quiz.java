@@ -14,11 +14,13 @@ JButton btn1;
 JButton btn2;
 JButton btn3;
 JButton btn4;
+JButton nextbtn;
 JPanel panel;
 JTextField text1;
 JLabel label1;
 JLabel label2;
 JLabel label3;
+JLabel label4;
 
 	public QuizMan(){
 	frame =new JFrame("クイズ");
@@ -28,6 +30,7 @@ JLabel label3;
 	btn2=new JButton("イ. 液晶ディスプレイ");
 	btn3=new JButton("ウ. プラズマディスプレイ");
 	btn4=new JButton("エ. 有機ELディスプレイ");
+	nextbtn=new JButton("次の問題へ");
 
 
 
@@ -35,13 +38,15 @@ JLabel label3;
 
     label1 =new JLabel("");
 	label2 =new JLabel("");
-	label3 =new JLabel("問題です。自発光型で、発行ダイオードの一種に分類される表示装置はどれか。");
+	label3 =new JLabel("問1。自発光型で、発行ダイオードの一種に分類される表示装置はどれか。");
+	label4 =new JLabel("問2。DRAMの特徴はどれか。");
 	panel.add(label3);
 	panel.add(btn1);
 	panel.add(btn2);
 	panel.add(btn3);
 	panel.add(btn4);
-	
+
+
 	Container con = frame.getContentPane();
     con.setLayout(new GridLayout(2,1));
     con.add(panel);
@@ -50,15 +55,18 @@ JLabel label3;
 
     btn1.addActionListener(this);
     btn1.setActionCommand("ア. CRTディスプレイ");
-    
+
     btn2.addActionListener(this);
     btn2.setActionCommand("イ. 液晶ディスプレイ");
-    
+
     btn3.addActionListener(this);
     btn3.setActionCommand("ウ. プラズマディスプレイ");
-    
+
     btn4.addActionListener(this);
     btn4.setActionCommand("エ. 有機ELディスプレイ");
+
+    nextbtn.addActionListener(this);
+    nextbtn.setActionCommand("次の問題へ");
 
 	frame.setVisible(true);
 
@@ -68,13 +76,21 @@ JLabel label3;
 
 		if(cmd.equals("ア. CRTディスプレイ")){
 			label2.setText("不正解です。答えはエでした。");
+			panel.add(nextbtn);
 		}else if(cmd.equals("イ. 液晶ディスプレイ")){
 			label2.setText("不正解です。答えはエでした。");
+			panel.add(nextbtn);
 		}else if(cmd.equals("ウ. プラズマディスプレイ")){
 			label2.setText("不正解です。答えはエでした。");
+			panel.add(nextbtn);
 		}else if(cmd.equals("エ. 有機ELディスプレイ")){
 			label1.setText("正解です");
+			panel.add(nextbtn);
      }
+        if(cmd.equals("次の問題へ")){
+        	panel.add(label4);
+        	panel.add()
+        }
 
 		}
 	}

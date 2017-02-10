@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <script>
+    window.addEventListener("load", init);
+    function init() {
+      var stage = new createjs.Stage("myCanvas");
+      var enemyList = [];
+      var bulletList = [];
+      var count = 0;
+      var scoreNum = 0;
+      var STAGE_W = 700;
+      var STAGE_H = 1000;
+      var bg = new createjs.Shape();
+      bg.graphics.beginFill("black").drawRect(0, 0, STAGE_W, STAGE_H);
+      stage.addChild(bg);
+     
+      var player = new createjs.Shape();
+      player.graphics.beginFill("white").moveTo(5, 0).lineTo(4, 1).lineTo(5, 2).closePath();
+      stage.addChild(player);
+     
+      var score = new createjs.Text("0", "24px sans-serif", "#ffff00");
+      stage.addChild(score);
+
+      stage.addEventListener("click", handleClick);
+      
+      createjs.Ticker.setFPS(60);
+      createjs.Ticker.addEventListener("tick", handleTick);
+      
+      function handleClick(event) {
+        var bullet = new createjs.Shape();
+        bullet.graphics.beginFill("#0000ff").drawCircle(0, 0, 3);
+        bullet.x = player.x;
+        bullet.y = player.y;
+        stage.addChild(bullet);
+        bulletList.push(bullet);
+      }
+      
+      function handleTick() {
+     
+        player.x += (stage.mouseX - player.x) * 0.1;
+        player.y += (stage.mouseY - player.y) * 0.1;
+      
+        count = count + 1;
+      
+        if (count % 60 == 0) {
+          var enemy = new createjs.Shape();
+          enemy.graphics.beginFill("#ff0000").drawRect(10,10,20,20).closePath();
+          enemy.x = STAGE_W *Math.random();
+          enemy.y = 0;
+          stage.addChild(enemy); 
+          enemyList.push(enemy); 
+        }
+
+
+        
+        for (var i = 0; i < bulletList.length; i++) {
+          bulletList[i].y -= 10;
+          
+          if (bulletList[i].y > STAGE_H) {
+            stage.removeChild(bulletList[i]); 
+            bulletList.splice(i, 1); 
+          }
+        }
+        
+        for (var i = 0; i < enemyList.length; i++) {
+          enemyList[i].y += 2;
+	  if(scoreNum>=100){
+          enemyList[i].y += 3;  
+          }else if(scoreNum>=150){
+          enemyList[i].y += 4;
+          }
+          
+          if (enemyList[i].y >= STAGE_H) {
+            showGameOver();
+          }
+        }
+        
+        
+        for (var j = 0; j < enemyList.length; j++) {
+          for (var i = 0; i < bulletList.length; i++) {
+            var bullet = bulletList[i];
+            var enemy = enemyList[j];
+         
+            var pt = bullet.localToLocal(0, 0, enemy);
+   
+            if (enemy.hitTest(pt.x, pt.y) == true) {
+              
+              stage.removeChild(bullet);
+              bulletList.splice(i, 1);
+              
+              stage.removeChild(enemyList[j]);
+              enemyList.splice(j, 1);
+          
+              scoreNum += 10;
+              score.text = String(scoreNum);
+              break;
+            }
+          }
+       
+        stage.update();
+      }
+      function showGameOver() {
+        alert("Gameover スコアは" +scoreNum+ "です。");
+     
+        createjs.Ticker.removeAllEventListeners();
+        stage.removeAllEventListeners();
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas" width="700" height="1000"></canvas>
+</body>
+</html>

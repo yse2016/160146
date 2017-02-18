@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -23,7 +23,6 @@
      
       var score = new createjs.Text("0", "24px sans-serif", "#ffff00");
       stage.addChild(score);
-
       stage.addEventListener("click", handleClick);
       
       createjs.Ticker.setFPS(60);
@@ -53,8 +52,6 @@
           stage.addChild(enemy); 
           enemyList.push(enemy); 
         }
-
-
         
         for (var i = 0; i < bulletList.length; i++) {
           bulletList[i].y -= 10;
@@ -99,8 +96,8 @@
               break;
             }
           }
-	}
-	      
+      }
+       
         stage.update();
       }
       function showGameOver() {

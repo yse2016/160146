@@ -89,7 +89,6 @@ JLabel label4;
      }
         if(cmd.equals("次の問題へ")){
         	panel.add(label4);
-        	panel.add()
         }
 
 		}
